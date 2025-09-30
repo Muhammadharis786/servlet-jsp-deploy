@@ -1,13 +1,11 @@
-FROM openjdk:17-jdk-slim
+# Tomcat 10.1 + Java 17 official image
+FROM tomcat:10.1-jdk17
 
-# Tomcat install karo (10.1 ka latest version)
-RUN apt-get update && apt-get install -y wget && \
-    wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.30/bin/apache-tomcat-10.1.30.tar.gz && \
-    tar xzf apache-tomcat-10.1.30.tar.gz && \
-    mv apache-tomcat-10.1.30 /usr/local/tomcat
+# Pehle se aayi hui default apps remove karo (manager, examples, etc.)
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-# WAR file copy karo
-COPY Student.war /usr/local/tomcat/webapps/
+# Apni WAR file copy karo
+COPY Student.war /usr/local/tomcat/webapps/ROOT.war
 
-# Tomcat start
-CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
+# Tomcat ka default CMD chalega
+EXPOSE 8080
