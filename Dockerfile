@@ -1,17 +1,13 @@
-# Java runtime
 FROM openjdk:17-jdk-slim
 
-# Tomcat install karo
+# Tomcat install karo (10.1 ka latest version)
 RUN apt-get update && apt-get install -y wget && \
-    wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.91/bin/apache-tomcat-9.0.91.tar.gz && \
-    tar xzf apache-tomcat-9.0.91.tar.gz && \
-    mv apache-tomcat-9.0.91 /usr/local/tomcat
+    wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.30/bin/apache-tomcat-10.1.30.tar.gz && \
+    tar xzf apache-tomcat-10.1.30.tar.gz && \
+    mv apache-tomcat-10.1.30 /usr/local/tomcat
 
-# WAR file ko Tomcat ke webapps folder me copy karo
-COPY Student.war /usr/local/tomcat/webapps/ROOT.war
+# WAR file copy karo
+COPY Student.war /usr/local/tomcat/webapps/
 
-# Tomcat run command
+# Tomcat start
 CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
-
-# Railway default port
-EXPOSE 8080
